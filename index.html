@@ -1,74 +1,160 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>今日不营业</title>
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=2.1-large-stage" />
   </head>
   <body>
     <main class="app">
-      <section class="hero" aria-label="今日不营业">
-        <div class="sky" aria-hidden="true">
-          <span></span>
-          <span></span>
-          <span></span>
+      <section class="hero" aria-label="Today Closed">
+        <div class="hero-scene" aria-hidden="true">
+          <div class="moon"></div>
+          <div class="window">
+            <span></span><span></span><span></span><span></span>
+          </div>
+          <div class="counter">
+            <div></div><div></div><div></div>
+          </div>
         </div>
-        <div class="hero-content">
+        <div class="hero-copy">
           <p class="eyebrow">只收压力，不收钱</p>
+          <p class="version-badge">2.1 大舞台版</p>
           <h1>今日不营业</h1>
-          <p class="subtitle">把烦恼放进这里，换一点安静、一点好玩，和一点“算了吧”。</p>
+          <p>一个把焦虑放下来的小网站。假装消费、虚拟吐雾、捏泡泡纸、整理桌面，都不需要有用，只要让今天轻一点。</p>
+          <div class="hero-stats">
+            <span id="reliefCount">0</span>
+            <small>次虚拟解压</small>
+          </div>
         </div>
       </section>
 
-      <nav class="dock" aria-label="解压工具">
-        <button class="dock-item active" data-view="worry">烦恼回收站</button>
-        <button class="dock-item" data-view="mist">压力雾化器</button>
+      <nav class="dock" aria-label="Relax tools">
+        <button class="dock-item active" data-view="home">今日小屋</button>
+        <button class="dock-item" data-view="worry">烦怜回收</button>
+        <button class="dock-item" data-view="mist">压力雾化</button>
         <button class="dock-item" data-view="shop">幻想商店</button>
+        <button class="dock-item" data-view="bubble">泡泡纸</button>
+        <button class="dock-item" data-view="desk">桌面整理</button>
+        <button class="dock-item" data-view="bottle">情绪漂流</button>
         <button class="dock-item" data-view="breath">呼吸圆</button>
         <button class="dock-item" data-view="noise">白噪音</button>
       </nav>
 
       <section class="workspace">
-        <article class="panel active" id="worry">
-          <div class="panel-copy">
+        <article class="panel active home-panel" id="home">
+          <div class="panel-head">
+            <p class="label">Lobby</p>
+            <h2>今天先不营业</h2>
+            <p>选一个小工具开始。这些都是虚拟互动，不保存隐私输入，也不产生真实消费或真实吸烟。</p>
+          </div>
+          <div class="room-grid" id="roomGrid"></div>
+          <div class="mood-strip">
+            <button data-mood="calm">想静一会</button>
+            <button data-mood="fun">想玩一下</button>
+            <button data-mood="blank">想放空</button>
+            <strong id="moodText">现在可以什么都不做。</strong>
+          </div>
+        </article>
+
+        <article class="panel split" id="worry">
+          <div class="panel-head">
             <p class="label">Worry Bin</p>
-            <h2>烦恼回收站</h2>
-            <p>写下来，然后选择一种方式让它离开屏幕。</p>
+            <h2>烦怜回收站</h2>
+            <p>写下来，再把它从屏幕里送走。</p>
           </div>
-          <textarea id="worryText" maxlength="120" placeholder="今天让你烦的事情是..."></textarea>
-          <div class="actions">
-            <button class="primary" data-dispose="shred">粉碎</button>
-            <button data-dispose="fly">放飞</button>
-            <button data-dispose="sink">沉入海底</button>
-          </div>
-          <div class="stage bin-stage" id="binStage">
-            <div class="paper" id="worryPaper">烦恼暂存中</div>
+          <div class="tool-grid">
+            <div>
+              <textarea id="worryText" maxlength="160" placeholder="今天让你烦的事情是..."></textarea>
+              <div class="actions">
+                <button class="primary" data-dispose="shred">粉碎</button>
+                <button data-dispose="fly">折成纸飞机</button>
+                <button data-dispose="sink">沉入海底</button>
+                <button data-dispose="burn">变成星屑</button>
+              </div>
+            </div>
+            <div class="stage bin-stage">
+              <div class="paper" id="worryPaper">烦怜暂存中</div>
+            </div>
           </div>
         </article>
 
         <article class="panel" id="mist">
-          <div class="panel-copy">
+          <div class="panel-head">
             <p class="label">Soft Mist</p>
             <h2>压力雾化器</h2>
-            <p>长按或点击，让压力变成一团会散开的虚拟雾气。</p>
+            <p>点击或长按，把压力做成一团会散开的虚拟雾气。它只是动画，不是烟。</p>
           </div>
-          <button class="mist-button" id="mistButton" aria-label="释放压力雾气">呼出去</button>
-          <div class="stage mist-stage" id="mistStage"></div>
+          <div class="mist-layout">
+            <button class="mist-button" id="mistButton">呼出去</button>
+            <div class="stage mist-stage" id="mistStage">
+              <p>点一下中间的圆</p>
+            </div>
+          </div>
         </article>
 
         <article class="panel" id="shop">
-          <div class="panel-copy">
+          <div class="panel-head">
             <p class="label">Fantasy Store</p>
             <h2>幻想商店</h2>
-            <p>这里所有东西都是假的，付款也是假的，轻松是真的。</p>
+            <p>所有东西都是假的，付款也是假的。</p>
           </div>
-          <div class="product-grid" id="productGrid"></div>
-          <div class="receipt" id="receipt">今日余额：无限。请选择一个虚拟商品。</div>
+          <div class="shop-layout">
+            <div class="product-grid" id="productGrid"></div>
+            <aside class="receipt">
+              <h3>假装订单</h3>
+              <div id="cartList">选一个虚拟商品吧。</div>
+              <button class="primary" id="fakePay">假装付款</button>
+            </aside>
+          </div>
+        </article>
+
+        <article class="panel" id="bubble">
+          <div class="panel-head">
+            <p class="label">Bubble Wrap</p>
+            <h2>捏泡泡纸</h2>
+            <p>没有任务，只有一格一格的轻轻点捏。</p>
+          </div>
+          <div class="bubble-board" id="bubbleBoard"></div>
+          <div class="actions">
+            <button class="primary" id="resetBubbles">换一张</button>
+            <span class="counter-text" id="bubbleCount">0 / 48</span>
+          </div>
+        </article>
+
+        <article class="panel" id="desk">
+          <div class="panel-head">
+            <p class="label">Tiny Desk</p>
+            <h2>桌面整理</h2>
+            <p>把零散的小物件点击归位，屏幕会慢慢清爽起来。</p>
+          </div>
+          <div class="desk-stage" id="deskStage"></div>
+          <div class="actions">
+            <button class="primary" id="messDesk">再乱一点</button>
+            <span class="counter-text" id="deskCount">待整理：0</span>
+          </div>
+        </article>
+
+        <article class="panel split" id="bottle">
+          <div class="panel-head">
+            <p class="label">Drift Note</p>
+            <h2>情绪漂流瓶</h2>
+            <p>写一句话，让它漂走。本地不保存。</p>
+          </div>
+          <div class="tool-grid">
+            <div>
+              <textarea id="bottleText" maxlength="100" placeholder="我想把...放到海上"></textarea>
+              <button class="primary" id="sendBottle">放进漂流瓶</button>
+            </div>
+            <div class="ocean-stage" id="oceanStage">
+              <div class="bottle-shape" id="bottleShape"></div>
+            </div>
+          </div>
         </article>
 
         <article class="panel" id="breath">
-          <div class="panel-copy">
+          <div class="panel-head">
             <p class="label">Breathing</p>
             <h2>呼吸圆</h2>
             <p>跟着圆慢慢吸气、停留、呼气。</p>
@@ -83,30 +169,23 @@
         </article>
 
         <article class="panel" id="noise">
-          <div class="panel-copy">
+          <div class="panel-head">
             <p class="label">Noise Mixer</p>
-            <h2>白噪音</h2>
-            <p>用浏览器生成柔和底噪，不需要下载音频文件。</p>
+            <h2>白噪音混音台</h2>
+            <p>用浏览器生成轻柔底噪，不需要音频文件。</p>
           </div>
           <div class="noise-list">
-            <label>
-              <span>雨声颗粒</span>
-              <input type="range" min="0" max="100" value="0" data-noise="rain" />
-            </label>
-            <label>
-              <span>海浪低频</span>
-              <input type="range" min="0" max="100" value="0" data-noise="wave" />
-            </label>
-            <label>
-              <span>房间微风</span>
-              <input type="range" min="0" max="100" value="0" data-noise="wind" />
-            </label>
+            <label><span>雨声颗粒</span><input type="range" min="0" max="100" value="0" data-noise="rain" /></label>
+            <label><span>海浪低频</span><input type="range" min="0" max="100" value="0" data-noise="wave" /></label>
+            <label><span>房间微风</span><input type="range" min="0" max="100" value="0" data-noise="wind" /></label>
+            <label><span>深夜电流</span><input type="range" min="0" max="100" value="0" data-noise="hum" /></label>
           </div>
           <button class="primary" id="stopNoise">全部静音</button>
         </article>
       </section>
     </main>
 
-    <script src="./app.js"></script>
+    <script src="./app.js?v=2.1-large-stage"></script>
   </body>
 </html>
+
