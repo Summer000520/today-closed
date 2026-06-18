@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>今日不营业</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section class="hero" aria-label="今日不营业">
+        <div class="sky" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div class="hero-content">
+          <p class="eyebrow">只收压力，不收钱</p>
+          <h1>今日不营业</h1>
+          <p class="subtitle">把烦恼放进这里，换一点安静、一点好玩，和一点“算了吧”。</p>
+        </div>
+      </section>
+
+      <nav class="dock" aria-label="解压工具">
+        <button class="dock-item active" data-view="worry">烦恼回收站</button>
+        <button class="dock-item" data-view="mist">压力雾化器</button>
+        <button class="dock-item" data-view="shop">幻想商店</button>
+        <button class="dock-item" data-view="breath">呼吸圆</button>
+        <button class="dock-item" data-view="noise">白噪音</button>
+      </nav>
+
+      <section class="workspace">
+        <article class="panel active" id="worry">
+          <div class="panel-copy">
+            <p class="label">Worry Bin</p>
+            <h2>烦恼回收站</h2>
+            <p>写下来，然后选择一种方式让它离开屏幕。</p>
+          </div>
+          <textarea id="worryText" maxlength="120" placeholder="今天让你烦的事情是..."></textarea>
+          <div class="actions">
+            <button class="primary" data-dispose="shred">粉碎</button>
+            <button data-dispose="fly">放飞</button>
+            <button data-dispose="sink">沉入海底</button>
+          </div>
+          <div class="stage bin-stage" id="binStage">
+            <div class="paper" id="worryPaper">烦恼暂存中</div>
+          </div>
+        </article>
+
+        <article class="panel" id="mist">
+          <div class="panel-copy">
+            <p class="label">Soft Mist</p>
+            <h2>压力雾化器</h2>
+            <p>长按或点击，让压力变成一团会散开的虚拟雾气。</p>
+          </div>
+          <button class="mist-button" id="mistButton" aria-label="释放压力雾气">呼出去</button>
+          <div class="stage mist-stage" id="mistStage"></div>
+        </article>
+
+        <article class="panel" id="shop">
+          <div class="panel-copy">
+            <p class="label">Fantasy Store</p>
+            <h2>幻想商店</h2>
+            <p>这里所有东西都是假的，付款也是假的，轻松是真的。</p>
+          </div>
+          <div class="product-grid" id="productGrid"></div>
+          <div class="receipt" id="receipt">今日余额：无限。请选择一个虚拟商品。</div>
+        </article>
+
+        <article class="panel" id="breath">
+          <div class="panel-copy">
+            <p class="label">Breathing</p>
+            <h2>呼吸圆</h2>
+            <p>跟着圆慢慢吸气、停留、呼气。</p>
+          </div>
+          <div class="breath-wrap">
+            <div class="breath-circle" id="breathCircle">吸气</div>
+          </div>
+          <div class="actions">
+            <button class="primary" id="breathToggle">开始</button>
+            <button id="breathReset">重置</button>
+          </div>
+        </article>
+
+        <article class="panel" id="noise">
+          <div class="panel-copy">
+            <p class="label">Noise Mixer</p>
+            <h2>白噪音</h2>
+            <p>用浏览器生成柔和底噪，不需要下载音频文件。</p>
+          </div>
+          <div class="noise-list">
+            <label>
+              <span>雨声颗粒</span>
+              <input type="range" min="0" max="100" value="0" data-noise="rain" />
+            </label>
+            <label>
+              <span>海浪低频</span>
+              <input type="range" min="0" max="100" value="0" data-noise="wave" />
+            </label>
+            <label>
+              <span>房间微风</span>
+              <input type="range" min="0" max="100" value="0" data-noise="wind" />
+            </label>
+          </div>
+          <button class="primary" id="stopNoise">全部静音</button>
+        </article>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
