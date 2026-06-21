@@ -156,24 +156,31 @@ h3 {
 
 .hero-stats {
   display: inline-grid;
-  grid-template-columns: auto auto;
-  gap: 8px;
-  align-items: end;
+  gap: 5px;
+  align-items: center;
   margin-top: 10px;
-  padding: 10px 14px;
-  border: 1px solid var(--line);
+  padding: 12px 18px;
+  border: 1px solid rgba(46, 168, 120, 0.2);
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.62);
+  color: #315b50;
+  background: rgba(142, 230, 189, 0.2);
 }
 
-.hero-stats span {
+.hero-stats strong {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 15px;
+}
+
+.hero-stats strong span {
   font-size: 28px;
   font-weight: 900;
+  color: var(--ink);
 }
 
 .hero-stats small {
   color: var(--muted);
-  padding-bottom: 6px;
 }
 
 .hero-scene {
@@ -447,10 +454,10 @@ textarea {
 
 .puff {
   position: absolute;
-  left: var(--x);
-  top: var(--y);
-  width: var(--size);
-  height: var(--size);
+  left: var(--x, 50%);
+  top: var(--y, 50%);
+  width: var(--size, 72px);
+  height: var(--size, 72px);
   border-radius: 50%;
   pointer-events: none;
   background:
@@ -686,7 +693,7 @@ input[type="range"] {
 @keyframes puff {
   to {
     opacity: 0;
-    transform: translate(var(--drift), -110px) scale(2.6);
+    transform: translate(var(--drift, 0px), -110px) scale(2.6);
   }
 }
 

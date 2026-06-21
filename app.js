@@ -38,16 +38,61 @@ const products = [
 ];
 
 const deskItems = ["note", "cup", "key", "card", "pen", "coin", "tape", "book"];
-let reliefCount = 0;
+const reliefStorageKey = "todayClosedReliefStats";
+let reliefStats = loadReliefStats();
+let reliefCount = reliefStats.total;
 let cart = [];
 let audioContext;
 const noiseNodes = {};
 let breathTimer;
 let breathStep = 0;
 
-function addRelief(amount = 1) {
-  reliefCount += amount;
-  $("#reliefCount").textContent = reliefCount;
+function loadReliefStats() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(reliefStorageKey));
+    if (saved && Number.isFinite(saved.total) && Array.isArray(saved.records)) {
+      saved.total = saved.records.length;
+      return saved;
+    }
+  } catch (error) {
+    console.warn("读取解压记录失败，已使用空记录。", error);
+  }
+  return { total: 0, records: [] };
+}
+
+function saveReliefStats() {
+  localStorage.setItem(reliefStorageKey, JSON.stringify(reliefStats));
+}
+
+function formatReliefTime(value) {
+  return new Intl.DateTimeFormat("zh-CN", {
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit"
+  }).format(new Date(value));
+}
+
+function renderReliefStats() {
+  $("#reliefCount").textContent = reliefStats.total;
+
+  const latest = reliefStats.records[0];
+  $("#lastReliefAction").textContent = latest
+    ? `最近：${latest.label} · ${formatReliefTime(latest.time)}`
+    : "最近：还没有开始";
+}
+
+function addRelief(label = "虚拟解压") {
+  reliefStats.total += 1;
+  reliefCount = reliefStats.total;
+  reliefStats.records.unshift({
+    label,
+    amount: 1,
+    time: new Date().toISOString()
+  });
+  reliefStats.records = reliefStats.records.slice(0, 300);
+  saveReliefStats();
+  renderReliefStats();
 }
 
 function openView(view) {
@@ -78,7 +123,7 @@ function buildShop() {
     button.addEventListener("click", () => {
       cart.push(products[Number(button.dataset.product)][0]);
       renderCart();
-      addRelief();
+      addRelief("加入幻想商品");
     });
   });
 }
@@ -101,7 +146,7 @@ function buildBubbles() {
       if (bubble.classList.contains("popped")) return;
       bubble.classList.add("popped");
       updateBubbleCount();
-      addRelief();
+      addRelief("捏泡泡纸");
     });
     board.appendChild(bubble);
   }
@@ -128,7 +173,7 @@ function scatterDesk() {
       item.classList.add("stored");
       window.setTimeout(() => item.remove(), 260);
       updateDeskCount();
-      addRelief();
+      addRelief("整理桌面");
     });
     stage.appendChild(item);
   });
@@ -155,7 +200,7 @@ function releaseMist() {
     stage.appendChild(puff);
     puff.addEventListener("animationend", () => puff.remove());
   }
-  addRelief(2);
+  addRelief("压力雾化");
 }
 
 function sendBottle() {
@@ -169,7 +214,7 @@ function sendBottle() {
     bottle.textContent = text.bottleSent;
     input.value = "";
   }, 1300);
-  addRelief(2);
+  addRelief("情绪漂流瓶");
 }
 
 function updateBreathWord() {
@@ -225,7 +270,7 @@ $$("[data-dispose]").forEach((button) => {
       paper.textContent = text.worryDone;
       paper.className = "paper";
     }, 820);
-    addRelief(2);
+    addRelief("烦恼回收");
   });
 });
 
@@ -244,7 +289,7 @@ $("#mistButton").addEventListener("click", releaseMist);
 $("#fakePay").addEventListener("click", () => {
   $("#cartList").textContent = cart.length ? text.payDone : text.payReady;
   cart = [];
-  addRelief(3);
+  addRelief("假装付款");
 });
 $("#resetBubbles").addEventListener("click", buildBubbles);
 $("#messDesk").addEventListener("click", scatterDesk);
@@ -291,3 +336,4 @@ buildRooms();
 buildShop();
 buildBubbles();
 scatterDesk();
+renderReliefStats();
